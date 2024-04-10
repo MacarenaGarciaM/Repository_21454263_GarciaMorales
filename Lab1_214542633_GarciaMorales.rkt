@@ -25,3 +25,23 @@
 e0
 e2
 e1
+
+;;REQUERIMIENTO 2: Función que permite establecer enlaces entre dos estaciones.
+; Dom: point1 (station)  X point2 (station) X distance (positive-number) X cost (positive-number U {0})
+; Rec: section
+(define section
+  (lambda (point1 point2 distance cost)
+    (list point1 point2 distance cost)))
+(define s0 (section e0 e1 2 50))
+(define s1 (section e1 e2 2.5 55))
+(define s2 (section e2 e3 1.5  30))
+(define s3 (section e3 e4 3  45))
+(define s4 (section e4 e5 3  45))
+(define s5 (section e4 e6 1.4  50))
+(define s6 (section e5 e8 2  40))
+(define s7 (section e0 e7 3  0))
+(define s8 (section e0 e9 7  100))
+(define s9 (section e6 e10 15  250))
+s0
+s1
+s2
