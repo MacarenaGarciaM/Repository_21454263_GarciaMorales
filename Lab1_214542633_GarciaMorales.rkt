@@ -22,9 +22,6 @@
 (define e8 (station 8 "Parque OHiggins" r 30))
 (define e9 (station 9 "San Pablo" t 40))
 (define e10 (station 10 "Los Dominicos" t 60))
-e0
-e2
-e1
 
 ;;REQUERIMIENTO 2: Función que permite establecer enlaces entre dos estaciones.
 ; Dom: point1 (station)  X point2 (station) X distance (positive-number) X cost (positive-number U {0})
@@ -42,6 +39,16 @@ e1
 (define s7 (section e0 e7 3  0))
 (define s8 (section e0 e9 7  100))
 (define s9 (section e6 e10 15  250))
-s0
-s1
-s2
+
+;;REQUERIMIENTO 3: Función que permite crear una línea
+;Dom: id (int) X name (string) X rail-type (string) X section* (* señala que se pueden agregar 0 o más tramos)
+;Rec: line
+(define line
+  (lambda (id name rail-type . section)
+    (cons id ( cons name (cons rail-type section)))))
+
+(define l0 (line 0 "Línea 0" "UIC 60 ASCE"))
+(define l1 (line 1 "Línea 1" "100 R.E." s0 s1 s2 s3 s5 s7 s8 s9))
+
+l0
+l1
