@@ -52,3 +52,15 @@
 
 l0
 l1
+
+;;REQUERIMIENTO 4: Función que permite determinar el largo total de una línea
+;Dom: line (line)
+;Rec: positive-number
+(define get-distance
+  (lambda (section)
+    (car(car(cdr section))))) ;;creamos una función para obtener la distancia de las estaciones
+
+(define line-length
+  (lambda (line)
+     (apply + (map get-distance(cdr(cdr (cdr line)))))))
+
