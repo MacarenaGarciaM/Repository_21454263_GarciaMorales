@@ -22,7 +22,8 @@
 (define e8 (station 8 "Parque OHiggins" r 30))
 (define e9 (station 9 "San Pablo" t 40))
 (define e10 (station 10 "Los Dominicos" t 60))
-
+e0
+e1
 ;;REQUERIMIENTO 2: Función que permite establecer enlaces entre dos estaciones.
 ; Dom: point1 (station)  X point2 (station) X distance (positive-number) X cost (positive-number U {0})
 ; Rec: section
@@ -39,7 +40,8 @@
 (define s7 (section e0 e7 3  0))
 (define s8 (section e0 e9 7  100))
 (define s9 (section e6 e10 15  250))
-
+s0
+s1
 ;;REQUERIMIENTO 3: Función que permite crear una línea
 ;Dom: id (int) X name (string) X rail-type (string) X section* (* señala que se pueden agregar 0 o más tramos)
 ;Rec: line
@@ -49,10 +51,8 @@
 
 (define l0 (line 0 "Línea 0" "UIC 60 ASCE"))
 (define l1 (line 1 "Línea 1" "100 R.E." s0 s1 s2 s3 s5 s7 s8 s9))
-
 l0
 l1
-
 ;;REQUERIMIENTO 4: Función que permite determinar el largo total de una línea
 ;Dom: line (line)
 ;Rec: positive-number
@@ -63,4 +63,29 @@ l1
 (define line-length
   (lambda (line)
      (apply + (map get-distance(cdr(cdr (cdr line)))))))
+(line-length l1)
 
+;;REQUERIMIENTO 6:  Función que permite determinar el costo total (monetario) de recorrer una línea.
+;Dom: line (line)
+;Rec: positive-number U {0}
+
+(define line-cost
+  (lambda(line)
+    (define get-cost
+      (lambda(section)
+        (if(null?(cdr section)) (car section)
+           (get-cost (cdr section)))))
+    (cond
+      ((null? line)null)
+      (else (apply + (map get-cost(cdr(cdr(cdr line)))))))))
+
+;;REQUERIMIENTO 8: Función que permite añadir tramos a una línea
+;Dom: line (line) X section (section)
+;Rec: line
+(define line-add-section
+  (lambda (line section)
+    (cons line section)))
+(define l2 (line-add-section l0 s0))
+(define l3 (line-add-section l2 s1))
+(define l4 (line-add-section l3 s2))
+(define l5 (line-add-section l4 s3))
