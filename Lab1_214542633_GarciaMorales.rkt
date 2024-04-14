@@ -84,7 +84,11 @@ l1
 ;Rec: line
 (define line-add-section
   (lambda (line section)
-    (cons line section)))
+    (cond
+    ((null? line)(list section))
+    ((equal? (car line) section)line)
+    (else
+    (cons (car line)(line-add-section(cdr line)section))))))
 (define l2 (line-add-section l0 s0))
 (define l3 (line-add-section l2 s1))
 (define l4 (line-add-section l3 s2))
