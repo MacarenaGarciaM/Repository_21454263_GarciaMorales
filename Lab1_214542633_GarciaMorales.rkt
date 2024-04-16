@@ -4,7 +4,7 @@
 (define m "m")
 (define c "c")
 (define t "t")
-;; REQUERIMIENTO 1: Función constructora de una estación de metro, las que pueden ser estaciones del tipo: regular (r), mantención (m),  combinación (c) o terminal (t)
+;; REQUERIMIENTO 2: Función constructora de una estación de metro, las que pueden ser estaciones del tipo: regular (r), mantención (m),  combinación (c) o terminal (t)
 
 ; Dom: id (int) X name (String)  X type (station-type) X stop-time (positive integer)
 ; Rec: Station
@@ -25,7 +25,7 @@
 
 
 
-;;REQUERIMIENTO 2: Función que permite establecer enlaces entre dos estaciones.
+;;REQUERIMIENTO 3: Función que permite establecer enlaces entre dos estaciones.
 ; Dom: point1 (station)  X point2 (station) X distance (positive-number) X cost (positive-number U {0})
 ; Rec: section
 (define section
@@ -43,7 +43,7 @@
 (define s9 (section e6 e10 15  250))
 
 
-;;REQUERIMIENTO 3: Función que permite crear una línea
+;;REQUERIMIENTO 4: Función que permite crear una línea
 ;Dom: id (int) X name (string) X rail-type (string) X section* (* señala que se pueden agregar 0 o más tramos)
 ;Rec: line
 (define line
@@ -54,7 +54,7 @@
 (define l1 (line 1 "Línea 1" "100 R.E." s0 s1 s2 s3 s5 s7 s8 s9))
 
 
-;;REQUERIMIENTO 4: Función que permite determinar el largo total de una línea
+;;REQUERIMIENTO 5: Función que permite determinar el largo total de una línea
 ;Dom: line (line)
 ;Rec: positive-number
 (define get-distance
@@ -66,7 +66,8 @@
      (apply + (map get-distance(cdr(cdr (cdr line)))))))
 
 
-;;REQUERIMIENTO 6:  Función que permite determinar el costo total (monetario) de recorrer una línea.
+
+;;REQUERIMIENTO 7:  Función que permite determinar el costo total (monetario) de recorrer una línea.
 ;Dom: line (line)
 ;Rec: positive-number U {0}
 
@@ -80,7 +81,7 @@
       ((null? line)null)
       (else (apply + (map get-cost(cdr(cdr(cdr line)))))))))
 
-;;REQUERIMIENTO 8: Función que permite añadir tramos a una línea
+;;REQUERIMIENTO 9: Función que permite añadir tramos a una línea
 ;Dom: line (line) X section (section)
 ;Rec: line
 (define line-add-section
@@ -95,7 +96,7 @@
 (define l4 (line-add-section l3 s2))
 (define l5 (line-add-section l4 s3))
 
-;;REQUERIMIENTO 10: Permite crear los carros de pasajeros que conforman un convoy. Los carros pueden ser de tipo terminal (tr) o central (ct).
+;;REQUERIMIENTO 11: Permite crear los carros de pasajeros que conforman un convoy. Los carros pueden ser de tipo terminal (tr) o central (ct).
 ;Dom: id (int) X capacity (positive integer) X model (string) X type (car-type))
 ;Rec: pcar
 (define tr "tr")
