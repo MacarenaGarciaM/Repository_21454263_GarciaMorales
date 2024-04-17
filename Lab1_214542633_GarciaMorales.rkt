@@ -113,3 +113,38 @@
 (define pc5 (pcar 5 100 "AS-2014" ct))
 (define pc6 (pcar 6 100 "AS-2016" ct))
 
+;;REQUERIMIENTO 12:
+;Dom:id (int) X maker (string) X rail-type (string) X speed (positive number) X station-stay-time (positive number U {0})
+;    X pcar* (* indica que pueden especificarse 1 o más carros)
+;Rec: train
+
+
+
+(define (is-train? train)
+  (define (train-int lst)
+    (cond
+      ((null? lst) #t)
+      ((equal? "tr" (car lst))
+       (cond
+         ((equal? "tr" (car (reverse lst)))
+          (train-int (cdr lst)))))
+      ((member "ct" (car lst))
+       (train-int (cdr lst)))
+      (else #f)))
+  (train-int (get-pcar train)))
+
+(define (get-pcar train)
+  (cddr(cddr (cdr train))))
+
+(define train
+  (lambda (id maker rail-type speed station-stay-time . pcar)
+    (define crear-tren 
+      (cons id (cons maker (cons rail-type (cons speed (cons station-stay-time pcar))))))
+    (cond
+      ((not(is-train? crear-tren))null)
+      (else crear-tren)))) ; Devuelve una lista nula si el tren no es válido
+(define t0 (train 0 "CAF" "UIC 60 ASCE" 60 1.5))
+(define t1 (train 1 "CAF" "UIC 60 ASCE" 70  2 pc1 pc0 pc3 pc2))
+(define t2 (train 1 "CAF" "UIC 60 ASCE" 70  2 pc1 pc0 pc3 pc4))
+
+
