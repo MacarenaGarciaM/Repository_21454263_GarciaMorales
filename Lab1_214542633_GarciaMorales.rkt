@@ -154,3 +154,14 @@
     (list id nombre train-maker)))
 (define d0 (driver 0 "name0" "CAF"))
 (define d1 (driver 1 "name1" "CAF"))
+
+;;REQUERIMIENTO 18:
+;Dom: id (int) X nombre (string)
+;Rec: subway
+
+(define subway
+  (lambda (id nombre)
+    (list id nombre)))
+(define sw0 (subway 0 "Metro Santiago"))
+(define sw1 (subway 1 "Subte"))
+(define sw2 (subway 2 "New York Subway"))
