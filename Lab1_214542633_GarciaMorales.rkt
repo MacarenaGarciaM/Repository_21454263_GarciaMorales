@@ -165,3 +165,10 @@
 (define sw0 (subway 0 "Metro Santiago"))
 (define sw1 (subway 1 "Subte"))
 (define sw2 (subway 2 "New York Subway"))
+
+;;REQUERIMIENTO 19: Función que permite añadir trenes a una red de metro.
+;Dom:sub (subway) X train+
+;Rec: subway
+(define subway-add-train
+  (lambda (subway . train)
+    (list subway train)))
