@@ -118,29 +118,38 @@
 ;    X pcar* (* indica que pueden especificarse 1 o más carros)
 ;Rec: train
 
-(define (is-train? train)
-  (define (train-int lst)
-    (cond
-      ((null? lst) #t)
-      ((equal? "tr" (car lst))
-       (cond
-         ((equal? "tr" (car (reverse lst)))
-          (train-int (cdr lst)))))
-      ((member "ct" (car lst))
-       (train-int (cdr lst)))
-      (else #f)))
-  (train-int (get-pcar train)))
-
 (define (get-pcar train)
-  (cddr(cddr (cdr train))))
+  (cddr(cdddr train)))
+
+(define tr-type
+  (lambda (pcars)
+    (cond
+      ((null? pcars) #t)
+      ((and (equal? "tr" (get-type(car pcars)))
+            (equal? "tr" (get-type(car (reverse pcars)))))
+       #t)
+      (else #f))))
+
+(define ct-type
+  (lambda (pcars)
+    (cond
+      ((null? pcars) #t) 
+      ((null? (cdr pcars)) #t) 
+      ((equal? "ct" (get-type(car pcars)))
+       (ct-type(cdr pcars)))
+      (else #f))))
+
 
 (define train
   (lambda (id maker rail-type speed station-stay-time . pcar)
-    (define crear-tren 
+    (define train-list 
       (cons id (cons maker (cons rail-type (cons speed (cons station-stay-time pcar))))))
     (cond
-      ((equal? #t (is-train? crear-tren))crear-tren)
-      (else null)))) ; Devuelve una lista nula si el tren no es válido
+      ((null? (get-pcar train-list)) train-list)
+      ((and (equal? (tr-type (get-pcar train-list)) #t)
+            (equal? (ct-type (get-pcar (cdr train-list))) #t)) train-list)
+      (else '()))))
+
 (define t0 (train 0 "CAF" "UIC 60 ASCE" 60 1.5))
 (define t1 (train 1 "CAF" "UIC 60 ASCE" 70  2 pc1 pc0 pc3 pc2))
 (define t2 (train 1 "CAF" "UIC 60 ASCE" 70  2 pc1 pc0 pc3 pc4))
@@ -172,3 +181,10 @@
 (define subway-add-train
   (lambda (subway . train)
     (list subway train)))
+
+;;REQUERIMIENTO 20: Función que permite añadir líneas a una red de metro.
+;Dom: sub (subway) X line+
+;Rec: subway
+(define subway-add-line
+  (lambda (subway . line)
+    (list subway line)))
